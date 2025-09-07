@@ -1,8 +1,10 @@
 from utils import FileHandler
 import pandas as pd 
 from plot.plot_signal import plot_signal
+
+
 class MultiBiquadFloat:
-            original_coefs =[ [ 5.49496377e-04, -1.09899275e-03,  5.49496377e-04,  1.00000000e+00, 7.75752801e-01,  5.82317689e-01],
+            default_coefs =[ [ 5.49496377e-04, -1.09899275e-03,  5.49496377e-04,  1.00000000e+00, 7.75752801e-01,  5.82317689e-01],
                 [ 1.00000000e+00, -2.00000000e+00,  1.00000000e+00,  1.00000000e+00, 5.54213901e-01,  6.30454831e-01],
                 [ 1.00000000e+00,  0.00000000e+00, -1.00000000e+00,  1.00000000e+00, 1.03575406e+00,  6.80934131e-01],
                 [ 1.00000000e+00,  2.00000000e+00,  1.00000000e+00,  1.00000000e+00, 4.52443546e-01,  8.39682131e-01],
@@ -10,8 +12,8 @@ class MultiBiquadFloat:
             
 
          
-            def __init__(self):
-                
+            def __init__(self, coefs = default_coefs):
+                self.original_coefs = coefs
                 self.num_sections = len(self.original_coefs)
                 #self.coeffs = array('f' , [])
                 #self.state = array('f' , [0]*(self.num_sections*2))
@@ -56,8 +58,14 @@ class MultiBiquadFloat:
 if __name__ =="__main__":
     #file handler obj
     fh = FileHandler()
+    th_order_coeffs4 =[ [0.00245139, -0.00490278,  0.00245139, 1, 0.62705842, 0.59315217],
+                        [1, -2,  1, 1, 0.93918031, 0.62993437],
+                        [1, 2, 1, 1,0.45639616, 0.80515434],
+                        [1, 2, 1, 1,1.2414353 , 0.84737342]]
+    th_order_coeffs2 = [[ 0.04828833, -0.09657667,  0.04828833 , 1.,          0.51495245,  0.6680828 ],
+                        [ 1.,          2.,          1,          1.,          1.09773868,  0.7223506 ]]
     #butter filter object
-    butter_filter = MultiBiquadFloat()
+    butter_filter = MultiBiquadFloat(th_order_coeffs2)
     #read path
     path = fh.select_file()
     #read a dataframe
