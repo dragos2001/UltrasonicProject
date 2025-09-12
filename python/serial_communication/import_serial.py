@@ -2,7 +2,7 @@ from serial import Serial
 from ..utils.utils import FileHandler
 import os
 import time
-PORT = 'COM6'  # Replace with your Pico's port
+PORT = 'COM8'  # Replace with your Pico's port
 BAUDRATE = 115200
  
 def read_from_pico_to_csv(directory, filename, serial_connection):
@@ -37,7 +37,7 @@ def read_from_pico_to_csv(directory, filename, serial_connection):
                 #     print(line)
                 
                 else:
-                    print(line)
+                    #print(line)
                     file.write(line.strip()+"\n")
                     
  
