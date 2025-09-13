@@ -83,7 +83,7 @@ int get_fft_size(int n)
 
 void padd_signal(int n , float complex *padded_signal, float *input_samples)
 {
-    memset(padded_signal, 0, sizeof(padded_signal));
+   
     for (int i = 0; i<n ;i++)
     {
         padded_signal[i] = input_samples[i];
@@ -115,7 +115,7 @@ void compute_envelope(int n, float *envelope,float complex *analytic_signal)
 {
     for (int i = 0; i< n ; i++)
     {
-        envelope[i]= sqrt ( (float) (conj(analytic_signal[i]) * analytic_signal[i]));
+        envelope[i] = sqrt( creal(analytic_signal[i]) * creal(analytic_signal[i]) + cimag(analytic_signal[i]) * cimag(analytic_signal[i]) );
     }
 
 }

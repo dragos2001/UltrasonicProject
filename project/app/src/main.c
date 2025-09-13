@@ -86,13 +86,16 @@ int main() {
 
             //Start counting
             start_time = get_absolute_time();
+            
             //Filter data
             memset(hidden_states,0,10*sizeof(double));
             filter_butterworth_biquad_postprocessing(5, adc_samples, filtered_samples, BIQUAD_LAYERS_CASCADE_5, hidden_states,  NUM_SAMPLES);
+            
             //Envelope
+            memset(analytic_signal, 0, sizeof(analytic_signal));
             padd_signal(NUM_SAMPLES, analytic_signal, filtered_samples);
-            compute_analytic_signal(fft_length, analytic_signal,filtered_samples);
-            compute_envelope(fft_length, envelope,  analytic_signal);
+            compute_analytic_signal(fft_length, analytic_signal, temp);
+            compute_envelope(fft_length, envelope, analytic_signal);
             //Stop counting
             end_time = get_absolute_time();
             
