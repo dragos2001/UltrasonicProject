@@ -4,7 +4,7 @@ from ..processing.plot.plot_signal import plot_signal
 import pandas as pd
 import os
 import time
-PORT = 'COM8'  # Replace with your Pico's port
+PORT = 'COM3'  # Replace with your Pico's port
 BAUDRATE = 115200
  
 def read_from_pico_to_csv(file_path, serial_connection):
