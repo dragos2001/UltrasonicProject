@@ -4,13 +4,13 @@ from ..processing.plot.plot_signal import plot_signal
 import pandas as pd
 import os
 import time
-PORT = 'COM3'  # Replace with your Pico's port
+PORT = 'COM8'  # Replace with your Pico's port
 BAUDRATE = 115200
  
 def read_from_pico_to_csv(file_path, serial_connection):
     #csv path
     timestamps=[]
-    data_frame= pd.DataFrame(index = range(1500), columns=["Timestamps","Filtered Voltages","Envelope"])
+    data_frame= pd.DataFrame(index = range(1500), columns=["Timestamps","Filtered Voltages","Envelope","Extracted Waveform"])
     columns = data_frame.columns.tolist()
     col = 0
     row = 0
@@ -30,7 +30,6 @@ def read_from_pico_to_csv(file_path, serial_connection):
                 if row % 1500 == 0:
                     row = 0
                     col = col + 1
-                    voltages = []
 
                 elements = line.strip().split(",")
                 array = list(map(float, elements))

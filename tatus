@@ -1,0 +1,41 @@
+[33mcommit 1e8c37b9ea1a4c26eb4d43c43cd90340003d48d3[m[33m ([m[1;36mHEAD -> [m[1;32mfeature/echo-detection[m[33m)[m
+Author: Dragos Bratfalean <fixed-term.dragos.bratfalean@ro.bosch.com>
+Date:   Mon Sep 15 10:34:41 2025 +0300
+
+    Added documentation for getting started
+
+[33mcommit 3206081980ea5f53109e7d1717ff66872be5a79f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: Dragos Bratfalean <fixed-term.dragos.bratfalean@ro.bosch.com>
+Date:   Sat Sep 13 11:21:36 2025 +0300
+
+    Setting padded array to 0 before padding the filtered signal in main.c + changed the emthod of computing the absolute value of the complex signal
+
+[33mcommit d50c727bae770dd8ba8ddf471018b93d06e46985[m
+Author: Dragos Bratfalean <fixed-term.dragos.bratfalean@ro.bosch.com>
+Date:   Fri Sep 12 17:49:29 2025 +0300
+
+    Created fft library for fft, padding, analytical signal
+
+[33mcommit c7984426ef5345eb91e223821e4f99e8c3463a79[m
+Author: Dragos Bratfalean <fixed-term.dragos.bratfalean@ro.bosch.com>
+Date:   Sun Sep 7 16:15:34 2025 +0300
+
+    Created dma and serial library. Successfully tested dma capture + filtering + calibrated adc sampling rate
+
+[33mcommit e126d0cea1d63d5779b5427033ac03e23fdda341[m
+Author: Dragos Bratfalean <fixed-term.dragos.bratfalean@ro.bosch.com>
+Date:   Sun Aug 31 21:41:28 2025 +0300
+
+    Created adc library and filter library(cacscaded butterworth) + tested convolution and hilbert in python
+
+[33mcommit 4e086f5b82edd1badf2100b9b9720a34895dd5a7[m
+Author: Dragos Bratfalean <fixed-term.dragos.bratfalean@ro.bosch.com>
+Date:   Sat Aug 30 14:37:37 2025 +0300
+
+    Added local + README
+
+[33mcommit e353d232aa03f3ed75defd0ff5488ef98697243f[m
+Author: BratfaleanDragos <dragos.bratfalean2001@gmail.com>
+Date:   Thu Jun 26 00:04:26 2025 +0300
+
+    Added USS dataset for 3 classes(Car, Human and Wall)

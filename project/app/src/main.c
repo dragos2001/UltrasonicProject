@@ -40,8 +40,10 @@
 #define ADC_CONVERT (ADC_VREF / (ADC_RANGE - 1))
 #define USS_TRIG (10)
 #define USS_ECHO (11)
-
-
+#define MARGIN 100
+#define THRESHOLD 0.1
+int detect_peak(int start, int end, float threshold, float *array_samples);
+void extract_relevant_signal(int left_margin, int right_margin, float *array, float *extracted_samples);
 
 int main() {
 
@@ -52,7 +54,8 @@ int main() {
     //array allocation
     uint16_t adc_samples[NUM_SAMPLES];
     float filtered_samples[NUM_SAMPLES];
-    double *hidden_states = (double*)malloc(10*(sizeof(double)));
+    double *hidden_states = (double*)malloc(10*sizeof(double));
+    
 
     //envelope allocation
     int fft_length = get_fft_size(NUM_SAMPLES);  
@@ -60,9 +63,11 @@ int main() {
     float complex temp[fft_length];
     float envelope[fft_length];
     float sampling_rate;
+
     //initializations
     uss_init(USS_TRIG, USS_ECHO);
     int dma_chan = dma_capture_config(ADC_NUM, NUM_SAMPLES, 394);
+
     //metadata 
     uint8_t meas_counter = 1;
     char* const measure = "measure";
@@ -70,13 +75,17 @@ int main() {
     uint64_t processing_time;
     uint64_t start_time;
     uint64_t end_time;
+
+    //waveform extraction
+    int origin, left_margin, right_margin;
+    float *extracted_waveform = (float*)malloc( sizeof(float) * ( right_margin - left_margin + 1));
     while(1) 
     {
         // Read command
         scanf("%s",command);
         if (strcmp(command,measure) == 0)  
-        {
-        
+        {   
+
             //Start Measurement
             printf("Start Measurement %hhu\n", meas_counter);  
             //Full adc processing
@@ -88,7 +97,7 @@ int main() {
             start_time = get_absolute_time();
             
             //Filter data
-            memset(hidden_states,0,10*sizeof(double));
+            memset(hidden_states, 0, 10 * sizeof(double));
             filter_butterworth_biquad_postprocessing(5, adc_samples, filtered_samples, BIQUAD_LAYERS_CASCADE_5, hidden_states,  NUM_SAMPLES);
             
             //Envelope
@@ -96,12 +105,29 @@ int main() {
             padd_signal(NUM_SAMPLES, analytic_signal, filtered_samples);
             compute_analytic_signal(fft_length, analytic_signal, temp);
             compute_envelope(fft_length, envelope, analytic_signal);
+            
+            //Relevant signal
+            origin = detect_peak(2*MARGIN, NUM_SAMPLES, THRESHOLD, envelope);
+            
+            if (origin != -1)
+            {
+                left_margin = origin - MARGIN;
+                right_margin = origin + MARGIN;
+                if (left_margin > 2 * MARGIN)
+                {
+                    extract_relevant_signal(left_margin, right_margin, envelope, extracted_waveform);
+                    
+                }   
+            }
+        
             //Stop counting
             end_time = get_absolute_time();
             
             //Send data serial
             send_data_serial_float(NUM_SAMPLES, filtered_samples, sampling_rate);
             send_data_serial_float(NUM_SAMPLES, envelope, sampling_rate);
+            send_data_serial_float(2 * MARGIN + 1, extracted_waveform, sampling_rate);
+            printf("Origin is: %d", origin);
             
             //Sampling freq
             printf("Sampling Frequency: %.3f kHz\n", 1 / sampling_rate * 1000);
@@ -115,4 +141,33 @@ int main() {
         
     }
     free(hidden_states);
+}
+
+int detect_peak( int start, int end, float threshold, float *array)
+{   
+    float max = 0;
+    int t = 0;
+    for (int i = start; i < end; i++)
+    {
+        if (array[i] > max)
+        {
+            t = i;
+            max = array[t];
+        }
+    }
+
+    if (max > threshold)
+        return t;
+    else return -1;
+}
+
+void extract_relevant_signal(int left_margin, int right_margin, float *array, float *extracted_samples)
+{       
+        int j=0;
+        memset(extracted_samples, 0, sizeof(float) * (right_margin - left_margin + 1));
+        for (int i = left_margin; i <= right_margin; i++)
+        {
+            extracted_samples[j] = array[i];       
+            j+=1;
+        }   
 }

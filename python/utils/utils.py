@@ -25,10 +25,10 @@ class FileHandler:
             root.destroy()
             print("No template selected")
         
-    def select_directory(self):
+    def select_directory(self,title):
         root=tk.Tk()
         root.withdraw()
-        directory = fd.askdirectory(title="Select directory")
+        directory = fd.askdirectory(title=title)
         
         if directory:
             root.destroy()
