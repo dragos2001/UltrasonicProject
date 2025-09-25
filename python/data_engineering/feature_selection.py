@@ -90,22 +90,31 @@ if __name__ == "__main__":
     from sklearn.model_selection import train_test_split
     
     
-    X_train, X_test, y_train, y_test = train_test_split(dataset_features, dataset_labels, test_size=0.2, random_state=42)
-    model = LinearSVC(loss ="squared_hinge",dual=False, tol=1e-3,verbose=1,max_iter = 100000)
+    X_train, X_test, y_train, y_test = train_test_split(dataset_features.iloc[:,:9], dataset_labels, test_size=0.2, random_state=42)
+    model1 = LinearSVC(loss ="squared_hinge",dual=False, tol=1e-3,verbose=1,max_iter = 100000)
+    model2 = SVC(gamma= 'scale', tol=1e-3,verbose=1,max_iter = 100000)
     pipeline = Pipeline([
         ('feature_selection', SelectKBest()),
-         ('classifier', model )])
+         ( 'classifier', model2 )])
     
-    param_grid = {
+    param_grid1 = {
         'classifier__penalty' : [ "l1"],
         'feature_selection__score_func' : [f_classif,mutual_info_classif],
-        'feature_selection__k': [2,5,10,15,20,26],
+        'feature_selection__k': [14],
         'classifier__C' : [1,10,50,100]
+        }
+    
+    param_grid2 = {
+        'feature_selection__score_func' : [f_classif,mutual_info_classif],
+        'feature_selection__k': [4,6],
+        'classifier__C' : [1,10,50,100],
+        'classifier__degree' : [3,5,7],
+        'classifier__kernel' : ['linear', 'poly', 'rbf','sigmoid']
         }
     
     grid_search = GridSearchCV(
         estimator = pipeline,
-        param_grid = param_grid,
+        param_grid = param_grid2,
         cv=5,   #5-fold cross-validation
         scoring = 'accuracy',
         n_jobs = -1, #use all available cores
@@ -113,7 +122,7 @@ if __name__ == "__main__":
         )
     
     #grid search
-    grid_search.fit(X_train,y_train)
+    grid_search.fit(X_train, y_train)
     best_score = grid_search.best_score_
     best_pipeline = grid_search.best_estimator_
     
