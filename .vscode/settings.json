@@ -1,0 +1,26 @@
+{
+    "python.defaultInterpreterPath": "C:\\Users\\brd5clj\\.conda\\envs\\uss_base_gpu\\python.exe",
+    "python.terminal.activateEnvironment": true,
+    "files.associations": {
+        "inttypes.h": "c",
+        "stdlib.h": "c",
+        "adc.h": "c",
+        "filter.h": "c",
+        "stdint.h": "c",
+        "math.h": "c",
+        "dma.h": "c",
+        "float.h": "c",
+        "random": "c",
+        "stack": "c",
+        "complex.h": "c",
+        "cmath": "c",
+        "regex": "c",
+        "xlocale": "c",
+        "xstring": "c",
+        "complex": "c",
+        "valarray": "c",
+        "stddef.h": "c",
+        "stdio.h": "c",
+        "array": "c"
+    }
+}

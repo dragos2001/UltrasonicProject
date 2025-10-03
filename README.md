@@ -28,6 +28,7 @@ This project develops both online and post-processing methods for ultrasonic ech
     - [Detection](#detection)
   - [🤖Machine Learning](#machine-learning)
     - [Data analysis](#data-analysis)
+- [Results](#results)
   - [🔧Building the project](#building-the-project)
   - [📚Bibliography](#bibliography)
 
@@ -84,6 +85,8 @@ This project develops both online and post-processing methods for ultrasonic ech
 
 ![My diagram](docs/tdf2.png)
 
+*Figure 1. Trasposed Form 2 Biquad*
+  
   ### Envelope
   The envelope is obtained by extracting the absolute value of the analytical signal. The analytical signal is obtained from the spectrum of the filtered signal by cancelling the negative components. An alternative approach for obtaining the analytic signal is by computing the hilbert transform of the filtered signal.
 
@@ -101,11 +104,37 @@ This project develops both online and post-processing methods for ultrasonic ech
   ### Data analysis
   To ensure optimal performance of machine learning algorithms, it is essential to conduct thorough data analysis aimed at identifying the most informative features. Feature extraction begins with evaluating the relevance and predictive power of each variable. This process often involves both statistical and algorithmic techniques.
 
-  One common approach is univariate feature selection, which assesses each feature individually based on statistical tests. Tools like **SelectKBest** from **scikit-learn** allow practitioners to rank features according to their correlation with the target variable, helping to isolate those with the highest explanatory value.
+  The basic analysis starts with the correlation and mutual information matrix. These two matrixes have the role to identify the most relevant features. They distinguish by the mathematical method used to draw these insights. Correlation Matrix measures the linear relationship between variables while mutual information computes the relative entropy between the Marginal distribution and the Outer product distribution of two target variables.
+
+  ![My diagram](docs/corr_matrix.png)
+
+  *Figure 2. Correlation Matrix*
+
+  The mutual information is characterized by the Kullback-Leibler divergence which computes the amount of dissimilarity between the two probability distributions.
+
+  *Kullback-Divergence:*
+  $D_{KL}(P \parallel Q) = \sum_{x \in X} P(x) \log \left( \frac{P(x)}{Q(x)}\right)$
+
+  *Mutual-Information:*
+  $I(X, Y) = \sum_{x \in X} \sum_{y \in Y} p(x, y) \log \left( \frac{p(x, y)}{p(x) \, p(y)} \right)$
+
+  ![My diagram](docs/mutual_info.png)
+
+  *Figure 3. Mutual Information Matrix*
+
+ Other common approach is univariate feature selection, which assesses each feature individually based on statistical tests. Tools like **SelectKBest** from **scikit-learn** allow practitioners to rank features according to their correlation with the target variable, helping to isolate those with the highest explanatory value.
 
   Beyond univariate methods, more advanced techniques such as **recursive feature elimination (RFE)**, **principal component analysis (PCA)**, and **embedded methods** (e.g., feature importance from tree-based models) can be employed to capture complex interactions and reduce dimensionality while preserving model accuracy.
+  
+  ![My diagram](docs/feature_importance.png)
+
+  *Figure 4. Feature importance based on ANOVA, MI and Random Forests*
+
+
+#  Results  
 
 
 ## 🔧Building the project
+
 
 ## 📚Bibliography

@@ -1,0 +1,16 @@
+Connected:
+BUSID  VID:PID    DEVICE                                                        STATE
+1-1    064f:2af9  USB Input Device                                              Not shared
+1-4    2e8a:0009  USB Serial Device (COM8), Reset                               Shared
+1-7    0408:5347  HP HD Camera, HP IR Camera                                    Not shared
+1-8    06cb:00f0  Synaptics FS7605 Touch Fingerprint Sensor with PurePrint(TM)  Not shared
+1-14   8087:0026  Intel(R) Wireless Bluetooth(R)                                Not shared
+3-1    0bda:8153  Realtek USB GbE Family Controller                             Not shared
+4-6    0bda:1100  USB Input Device                                              Not shared
+6-1    17ef:609b  USB Input Device                                              Not shared
+6-3    0bda:1101  USB Input Device                                              Not shared
+
+Persisted:
+GUID                                  DEVICE
+c0d1e8cf-7f69-4f20-87ad-334dd8e98cf0  USB Mass Storage Device, RP2350 Boot
+
