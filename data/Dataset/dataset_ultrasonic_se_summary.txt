@@ -1,0 +1,5 @@
+Total number of measurements: 1661
+Validated number of measurements: 1661
+Invalidated number of measurements: 0
+Number of short measurements: 711
+Number of tall measurements: 950
