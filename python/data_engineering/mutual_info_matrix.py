@@ -20,10 +20,8 @@ def display_mi_matrix(dataset,title = "Mutual info matrix", nbins=None):
     plt.figure(figsize=(20,14))
     ax = sns.heatmap(mi_info_matrix,annot=True, fmt=".2f", xticklabels = columns, yticklabels = columns)
     plt.title(title)
-    
+    plt.show()  
 def mutual_info_matrix(dataset, nbins=None):
-    
-   
     #features
     features = dataset.columns.values
     N = len(features)
@@ -52,12 +50,7 @@ def mutual_info_matrix(dataset, nbins=None):
     norm_mi_matrix = mi_matrix * 2 / (H + Ht)
     
     return norm_mi_matrix,entropy_matrix,probs_matrix
-   
-   
-
-
-
-
+ 
 if __name__ == "__main__":
     
     fh = FileHandler()

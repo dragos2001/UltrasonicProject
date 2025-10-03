@@ -27,9 +27,10 @@ def corr_matrix(dataframe,title="Corr Matrix"):
     # Plotting the correlation matrix as a heatmap
     plt.figure(figsize=(20, 20))
     sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.1)
-    
     plt.title(title)
     plt.show()
+    
+    return correlation_matrix 
 
 def max_envelope_amp(signal):
     max_v = 0
@@ -200,7 +201,7 @@ def extract_features(envelope_dataset, features, MARGIN, PEAK, n_properties, dir
              #entrop and other topographic proeprties
              entropy, peaks_indices, props = peaks_norm_entropy(envelope, height = PEAK, distance = MARGIN)
              #sort
-             sorted_indices = np.argsort(props["peak_heights"])
+             sorted_indices = np.flip(np.argsort(props["peak_heights"]))
              sorted_properties = { key : props[key][sorted_indices] for key in props.keys() }
              properties.append(sorted_properties)
              peaks_entropy.append(entropy)
@@ -222,7 +223,7 @@ def extract_features(envelope_dataset, features, MARGIN, PEAK, n_properties, dir
      #categorical->numeric
      features_dataset['label'] = (features_dataset['label']=='tall').astype(int)  
      #flat properties
-     flattened_properties = [flat_dict(d,n_properties) for d in properties]
+     flattened_properties = [flat_dict(prop,n_properties) for prop in properties]
      #df properties
      properties_dataset = pd.DataFrame(flattened_properties, index = features_dataset.index)
      properties_dataset['label'] = features_dataset['label']
@@ -237,7 +238,7 @@ if __name__ == "__main__":
     
     MARGIN = 20
     PEAK = 0.05
-    n_properties = 1
+    n_properties = 2
     fh = FileHandler()
     dir_path = fh.select_directory(title="Dataset dir")
     dataset_path_list = []
@@ -247,7 +248,7 @@ if __name__ == "__main__":
         if ext == 'csv':
             dataset_path_list.append(dataset_path)
         
-    envelope_dataset = pd.read_csv(dataset_path_list[0], index_col = 0)
+    envelope_dataset = pd.read_csv(dataset_path_list[1], index_col = 0)
     
     features = ["max amp","std","kurtosis","skewness","power","rise time","fall time","peak entropy"]
     features.extend(envelope_dataset.columns[-7:])

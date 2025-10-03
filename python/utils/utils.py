@@ -16,8 +16,8 @@ class FileHandler:
     def select_file(self):
         root=tk.Tk()
         root.withdraw()
-        
-        file=fd.askopenfilename(title="Open file")
+        root.attributes('-topmost',True) # make sure it's on top
+        file=fd.askopenfilename(title="Open file",parent=root)
         if file:
             root.destroy()
             return file
@@ -28,7 +28,8 @@ class FileHandler:
     def select_directory(self,title):
         root=tk.Tk()
         root.withdraw()
-        directory = fd.askdirectory(title=title)
+        root.attributes('-topmost',True) # make sure it's on top
+        directory = fd.askdirectory(title=title,parent=root)
         
         if directory:
             root.destroy()
@@ -40,7 +41,8 @@ class FileHandler:
     def select_files(self):
         root=tk.Tk()
         root.withdraw()
-        files=fd.askopenfilenames(title="Select Directory")
+        root.attributes('-topmost',True) # make sure it's on top
+        files=fd.askopenfilenames(title="Select Directory",parent=root)
         
         if files:
             root.destroy()
